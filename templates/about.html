@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home - SkillUp NGO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 80px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <div class="logo" style="font-size: 28px; font-weight: bold; color: #1e3a8a;">
+        SkillUp<span style="color: #1e3a8a;"> NGO</span>
+    </div>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Home</a>
+        <a href="{{ url_for('about') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">About Us</a>
+        <a href="{{ url_for('our_work') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Our Work</a>
+        
+        <a href="{{ url_for('media') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Media</a>
+        
+        <a href="{{ url_for('logout') }}" style="text-decoration: none; color: #ef4444; margin-left: 30px; font-weight: 500;">Logout</a>
+    </div>
+</nav>
+
+<section class="about-hero">
+    <h1>About SkillUp</h1>
+</section>
+
+
+
+<div style="max-width: 1000px; margin: -40px auto 40px; padding: 0 20px;">
+    <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.1);">
+        <h2 style="color: #1e3a8a; margin-bottom: 15px;">Who We Are</h2>
+        <p style="line-height: 1.8; color: #555;">{{ content.story }}</p>
+    </div>
+
+    <div style="margin-top: 30px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.1);">
+        <h2 style="color: #1e3a8a; margin-bottom: 15px;">Our Core Values</h2>
+        <ul style="padding-left: 20px; line-height: 2;">
+            {% for value in content.core_values.split(',') %}
+                <li style="color: #555;">{{ value.strip() }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

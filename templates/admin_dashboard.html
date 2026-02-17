@@ -1,0 +1,218 @@
+<div style="display: flex; min-height: 100vh; font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6;">
+    
+    <div style="width: 260px; background-color: #111117; color: white; display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 1000;">
+        <div style="padding: 30px 20px; background: #1e3a8a; text-align: center;">
+            <h2 style="margin: 0; font-size: 1.4rem;">SkillUp Admin</h2>
+        </div>
+        
+        <div style="flex: 1; padding: 20px 0;">
+            <div onclick="showTab('home-tab')" id="nav-home" style="padding: 15px 25px; cursor: pointer; background: #333; border-left: 4px solid #1a5d1a; color: white; transition: 0.3s;">
+                <span style="font-weight: 600;">Home Page</span>
+            </div>
+            <div onclick="showTab('about-tab')" id="nav-about" style="padding: 15px 25px; cursor: pointer; color: #888; transition: 0.3s;">
+                <span style="font-weight: 600;">About Page</span>
+            </div>
+            <div onclick="showTab('work-tab')" id="nav-work" style="padding: 15px 25px; cursor: pointer; color: #888; transition: 0.3s;">
+                <span style="font-weight: 600;">Our Work</span>
+            </div>
+            <div onclick="showTab('media-tab')" id="nav-media" style="padding: 15px 25px; cursor: pointer; color: #888; transition: 0.3s;">
+                <span style="font-weight: 600;">Media Page</span>
+            </div>
+        </div>
+
+        <div style="padding: 20px; border-top: 1px solid #333;">
+            <a href="/home" style="display: block; color: #aaa; text-decoration: none; margin-bottom: 10px; font-size: 0.9rem;">View Website</a>
+            <a href="/logout" style="display: block; color: #ef4444; text-decoration: none; font-weight: bold;">Logout</a>
+        </div>
+    </div>
+
+    <div style="flex: 1; margin-left: 260px; padding: 40px;">
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div style="background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-weight: 600;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div id="home-tab">
+            <h1 style="color: #1a1a1a; margin-bottom: 5px;">Home Page Content</h1>
+            <p style="color: #64748b; margin-bottom: 30px;">Update your hero banner, vision, and mission.</p>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="update_site_content" value="true">
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <label style="display: block; margin-bottom: 10px; color: #1a5d1a;"><b>Hero Banner Image</b></label>
+                    {% if content.banner %}
+                    <div style="margin-bottom: 15px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                        <img src="{{ url_for('static', filename='uploads/' + content.banner) }}" style="width: 180px; height: 90px; object-fit: cover; border-radius: 6px; display: block; margin-bottom: 10px;">
+                        <button type="submit" name="delete_banner" value="true" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete Image</button>
+                    </div>
+                    {% endif %}
+                    <input type="file" name="banner" style="margin-bottom: 25px;">
+
+                    <div style="display:flex; gap:20px;">
+                        <div style="flex:1;">
+                            <label style="display:block; margin-bottom:8px;"><b>Vision Statement</b></label>
+                            <textarea name="vision" style="width:100%; height:120px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;">{{ content.vision }}</textarea>
+                        </div>
+                        <div style="flex:1;">
+                            <label style="display:block; margin-bottom:8px;"><b>Mission Statement</b></label>
+                            <textarea name="mission" style="width:100%; height:120px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;">{{ content.mission }}</textarea>
+                        </div>
+                    </div>
+                    <button type="submit" style="margin-top: 20px; background: #1e3a8a; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Save Home Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="about-tab" style="display: none;">
+            <h1 style="color: #1a1a1a; margin-bottom: 5px;">About Page Content</h1>
+            <p style="color: #64748b; margin-bottom: 30px;">Manage your organization's story and core values.</p>
+            <form method="POST">
+                <input type="hidden" name="update_site_content" value="true">
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <label style="display:block; margin-bottom:8px;"><b>Who We Are (Our Story)</b></label>
+                    <textarea name="story" style="width:100%; height:180px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 25px;">{{ content.story }}</textarea>
+
+                    <label style="display:block; margin-bottom:8px;"><b>Core Values (Comma Separated)</b></label>
+                    <textarea name="core_values" style="width:100%; height:100px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;">{{ content.core_values }}</textarea>
+                    
+                    <button type="submit" style="margin-top: 20px; background: #1e3a8a; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Save About Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="work-tab" style="display: none;">
+            <h1 style="color: #1a1a1a; margin-bottom: 5px;">Our Work (Projects)</h1>
+            <p style="color: #64748b; margin-bottom: 30px;">Add or manage organization projects.</p>
+
+            <div style="background: #111117; color: white; padding: 30px; border-radius: 12px; margin-bottom: 40px;">
+                <h3 style="margin-top:0;">Add New Project</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    <label style="display:block; margin-bottom:5px;">Project Title</label>
+                    <input type="text" name="project_title" required style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: none;">
+                    
+                    <label style="display:block; margin-bottom:5px;">Description</label>
+                    <textarea name="project_desc" required style="width: 100%; height: 100px; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: none;"></textarea>
+                    
+                    <label style="display:block; margin-bottom:5px;">Project Image</label>
+                    <input type="file" name="project_image" style="display: block; margin-bottom: 20px;">
+                    
+                    <button type="submit" name="add_project" style="background: #1a5d1a; color: white; border: none; padding: 12px 25px; border-radius: 20px; cursor: pointer; font-weight: bold;">Add Project</button>
+                </form>
+            </div>
+
+            <h2 style="color: #1a1a1a; margin-bottom: 20px;">Existing Projects</h2>
+            {% for project in projects %}
+            <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                    <input type="text" name="project_title" value="{{ project.title }}" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    <textarea name="project_desc" style="width: 100%; height: 80px; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px;">{{ project.description }}</textarea>
+                    
+                    {% if project.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + project.image) }}" style="width: 150px; border-radius: 6px; margin-bottom: 10px; display: block;">
+                    {% endif %}
+                    
+                    <input type="file" name="project_image" style="display: block; margin-bottom: 15px;">
+                    
+                    <button type="submit" name="update_project" style="background: #1a5d1a; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Update</button>
+                    <button type="submit" name="delete_project" style="background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">Delete</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="media-tab" style="display: none;">
+            <h1 style="color: #1a1a1a; margin-bottom: 5px;">Media Management</h1>
+            <p style="color: #64748b; margin-bottom: 30px;">Manage your introduction, image gallery, and video content.</p>
+
+            <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px;">
+                <h3 style="color: #1a5d1a; margin-top: 0;">Media Introduction</h3>
+                <form method="POST">
+                    <input type="hidden" name="update_site_content" value="true">
+                    <textarea name="media_intro" style="width:100%; height:120px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;">{{ content.media_intro }}</textarea>
+                    <button type="submit" style="margin-top: 15px; background: #1e3a8a; color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-weight: bold;">Save Introduction</button>
+                </form>
+            </div>
+
+            <div style="background: #111117; color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+                <h3 style="margin-top:0;">Upload Gallery Images</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="file" name="gallery_file" required style="margin-bottom: 15px; display: block;">
+                    <button type="submit" name="add_gallery_image" style="background: #1a5d1a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Upload Image</button>
+                </form>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px; overflow-x: auto;">
+                    {% for img in images %}
+                    <div style="position: relative;">
+                        <img src="{{ url_for('static', filename='uploads/' + img.filename) }}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 6px;">
+                        <form method="POST" style="position: absolute; top: 0; right: 0;">
+                            <input type="hidden" name="image_id" value="{{ img.id }}">
+                            <button type="submit" name="delete_gallery_image" style="background: #ef4444; border: none; color: white; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 10px;">X</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div style="background: #111117; color: white; padding: 30px; border-radius: 12px;">
+                <h3 style="margin-top:0;">Video Links (YouTube Embed)</h3>
+                <form method="POST">
+                    <input type="text" name="video_url" placeholder="Paste YouTube Embed URL (e.g. https://www.youtube.com/embed/ID)" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: none;">
+                    <button type="submit" name="add_video" style="background: #1a5d1a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Add Video</button>
+                </form>
+                
+                <div style="margin-top: 20px;">
+                    {% for video in videos %}
+                    <div style="display: flex; justify-content: space-between; background: #262626; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                        <span style="font-size: 0.9rem; overflow: hidden; color: #ccc;">{{ video.url }}</span>
+                        <form method="POST">
+                            <input type="hidden" name="video_id" value="{{ video.id }}">
+                            <button type="submit" name="delete_video" style="color: #ef4444; background: none; border: none; cursor: pointer; font-weight: bold;">Delete</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(tabId) {
+    const tabs = ['home-tab', 'about-tab', 'work-tab', 'media-tab'];
+    const navs = ['nav-home', 'nav-about', 'nav-work', 'nav-media'];
+    
+   
+    tabs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.style.display = 'none';
+    });
+    
+  
+    navs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.background = 'transparent';
+            element.style.color = '#888';
+            element.style.borderLeft = 'none';
+        }
+    });
+    
+  
+    document.getElementById(tabId).style.display = 'block';
+    
+  
+    const activeNavId = 'nav-' + tabId.replace('-tab', '');
+    const activeNav = document.getElementById(activeNavId);
+    if (activeNav) {
+        activeNav.style.background = '#333';
+        activeNav.style.color = 'white';
+        activeNav.style.borderLeft = '4px solid #1a5d1a';
+    }
+}
+</script>

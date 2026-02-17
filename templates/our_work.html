@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Work - SkillUp NGO</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f8fafc; }
+        
+      
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 80px;
+            background: white;
+        }
+        .logo { font-size: 28px; font-weight: bold; color: #1e3a8a; }
+        .logo span { color: #334155; }
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover, .active-link { color: #1e3a8a !important; border-bottom: 2px solid #1a5d1a; padding-bottom: 5px; }
+
+        
+        .hero-work {
+            background: linear-gradient(135deg, #1e3a8a 0%, #064e3b 100%);
+            color: white;
+            padding: 80px 100px;
+        }
+        .hero-work h1 { font-size: 3.5rem; margin: 0; }
+        .hero-work p { font-size: 1.2rem; opacity: 0.9; margin-top: 15px; }
+
+        
+        .container { padding: 60px 100px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; }
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-content { padding: 25px; }
+        .card-content h3 { color: #1e3a8a; margin: 0 0 10px 0; font-size: 1.4rem; }
+        .card-content p { color: #64748b; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 80px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <div class="logo" style="font-size: 28px; font-weight: bold; color: #1e3a8a;">
+        SkillUp<span style="color: #1e3a8a;"> NGO</span>
+    </div>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Home</a>
+        <a href="{{ url_for('about') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">About Us</a>
+        <a href="{{ url_for('our_work') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Our Work</a>
+        
+        <a href="{{ url_for('media') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Media</a>
+        
+        <a href="{{ url_for('logout') }}" style="text-decoration: none; color: #ef4444; margin-left: 30px; font-weight: 500;">Logout</a>
+    </div>
+</nav>
+    <div class="hero-work">
+        <h1>Our Work</h1>
+        <p>Transforming lives through meaningful educational initiatives</p>
+    </div>
+
+  
+    <div class="container">
+        {% for project in projects %}
+        <div class="card">
+            {% if project.image %}
+            <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt="Project Image">
+            {% endif %}
+            <div class="card-content">
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<div style="background-color: #617fd1; padding: 60px 0; text-align: center; margin-top: 50px;">
+        <h2 style="color: #100772; font-size: 2.2rem; margin-bottom: 10px;">Our Impact</h2>
+        <p style="color: #163875; margin-bottom: 40px;">See how we are changing lives with your support</p>
+        
+        <div style="display: flex; justify-content: center; gap: 20px; padding: 0 100px;">
+            <div style="flex: 1; background: #1e3a8a; color: white; padding: 40px 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 2.5rem; margin: 0;">200+</h3>
+                <p style="font-size: 1.1rem; margin: 10px 0 0;">People Helped</p>
+            </div>
+
+            <div style="flex: 1; background: #1e3a8a; color: white; padding: 40px 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 2.5rem; margin: 0;">300+</h3>
+                <p style="font-size: 1.1rem; margin: 10px 0 0;">Volunteers Engaged</p>
+            </div>
+
+            <div style="flex: 1; background: #1e3a8a; color: white; padding: 40px 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 2.5rem; margin: 0;">$50,000+</h3>
+                <p style="font-size: 1.1rem; margin: 10px 0 0;">Funds Raised</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

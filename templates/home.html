@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home - SkillUp NGO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+
+<nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 80px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <div class="logo" style="font-size: 28px; font-weight: bold; color: #1e3a8a;">
+        SkillUp<span style="color: #1e3a8a;"> NGO</span>
+    </div>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Home</a>
+        <a href="{{ url_for('about') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">About Us</a>
+        <a href="{{ url_for('our_work') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Our Work</a>
+        
+        <a href="{{ url_for('media') }}" style="text-decoration: none; color: #334155; margin-left: 30px; font-weight: 500;">Media</a>
+        
+        <a href="{{ url_for('logout') }}" style="text-decoration: none; color: #ef4444; margin-left: 30px; font-weight: 500;">Logout</a>
+    </div>
+</nav>
+<div class="banner-container">
+    {% if content.banner %}
+    <img src="{{ url_for('static', filename='uploads/' + content.banner) }}" class="banner-img">
+    {% else %}
+    <div style="height:300px; background:#ccc; display:flex; align-items:center; justify-content:center;">
+        <b>No Banner Uploaded</b>
+    </div>
+    {% endif %}
+</div>
+
+<div class="content-row">
+    <div class="card">
+        <h2>Our Vision</h2>
+        <p>{{ content.vision }}</p> 
+    </div>
+    <div class="card">
+        <h2>Our Mission</h2>
+        <p>{{ content.mission }}</p> 
+    </div>
+</div>
+
+</body>
+</html>
